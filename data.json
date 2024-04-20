@@ -1,0 +1,50 @@
+{
+    "Books": {
+        "kdGJpb": {
+            "Title": "Diary of a Wimpy Kid",
+            "copies": {
+                "00": false,
+                "01": false,
+                "02": true
+            }
+        },
+        "YvFtOm": {
+            "Title": "Fantastic Beasts: And Where to Find Them",
+            "copies": {
+                "00": false,
+                "01": false,
+                "02": false
+            }
+        },
+        "mFQPzt": {
+            "Title": "Sherlock Holmes",
+            "copies": {
+                "00": false,
+                "01": false,
+                "02": false
+            }
+        },
+        "iRZpJG": {
+            "Title": "Surviving to Drive",
+            "copies": {
+                "00": false,
+                "01": false,
+                "02": true
+            }
+        }
+    },
+    "Borrowers": {
+        "02929255": {
+            "borrowerName": "Carlos",
+            "borrowedBook": "kdGJpb02"
+        },
+        "56755099": {
+            "borrowerName": "James",
+            "borrowedBook": null
+        },
+        "61470151": {
+            "borrowerName": "Ricky",
+            "borrowedBook": null
+        }
+    }
+}
