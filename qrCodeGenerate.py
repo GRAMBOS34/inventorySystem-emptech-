@@ -28,7 +28,7 @@ def generateurl(typeid, title):
                     copies[index] = False
 
                     url = HOST + typeid + f"/{i}{index}"
-                    filename = i + index #file name is the id
+                    filename = i + index #filename is the id
                     makeQr(url=url, typeid="books",filename=filename)
         
                     # Clear the file content
