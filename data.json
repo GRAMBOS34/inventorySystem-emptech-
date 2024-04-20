@@ -1,45 +1,6 @@
 {
     "Books": {
-        "EXFPKZ": {
-            "Title": "Diary of a Wimpy Kid",
-            "copies": {
-                "00": false,
-                "01": false,
-                "02": false,
-                "03": false
-            }
-        },
-        "jvtXAc": {
-            "Title": "Surviving to Drive",
-            "copies": {
-                "00": false,
-                "01": false,
-                "02": false,
-                "03": false
-            }
-        },
-        "WiHiBn": {
-            "Title": "The Great Gatsby",
-            "copies": {
-                "00": false,
-                "01": false,
-                "02": false,
-                "03": false
-            }
-        }
     },
     "Borrowers": {
-        "84841128": {
-            "borrowerName": "Carlos",
-            "borrowedBook": null
-        },
-        "02300126": {
-            "borrowerName": "Ricky",
-            "borrowedBook": null
-        },
-        "30203174": {
-            "borrowerName": "Bono",
-            "borrowedBook": null
-        }
     }
 }

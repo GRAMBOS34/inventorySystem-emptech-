@@ -2,6 +2,11 @@ import qrcode
 import random
 import string
 import json
+import socket
+
+hostname = socket.gethostname()
+ipaddress = socket.gethostbyname(hostname)
+HOST = f"http://{ipaddress}:5000/"
 
 #generates the qrcodes and puts them in the folder "qrcodes"
 def makeQr (url, typeid, filename):
@@ -13,8 +18,6 @@ def makeQr (url, typeid, filename):
 
 #generates the url for the qrcodes
 def generateurl(typeid, title):
-    HOST = "http://192.168.0.158:5000/" #this is why it can only work if all devices are on the same network
-
     #check if the book exists if it does, use the id of the original book and increment the copy num (the numbers)
     with open('data.json', 'r+') as file:
         data = json.load(file)
@@ -63,7 +66,6 @@ def generateurl(typeid, title):
             json.dump(data, file, indent=4)
 
 def addNewUser(typeId, name):
-    HOST = "http://192.168.0.158:5000/" #this is why it can only work if all devices are on the same networ
     with open('data.json', "r+") as file:
         data = json.load(file)
         if typeId == "u":

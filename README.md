@@ -24,13 +24,19 @@ Made for EMPTECH because the qrcode api of google is deprecated and I couldn't t
    pip install -r requirements.txt
    ```
 
-4) Run this to run the server
+4) Run this for setup
+
+   ```
+   py setup.py
+   ```
+
+5) Run this to run the server
 
    ```
    py main.py
    ```
 
-5) Run this if you'd like to add either books or users
+6) Run this if you would like to add more books or users
    ```
    py qrCodeGenerate.py
    ```
