@@ -27,12 +27,12 @@ Made for EMPTECH because the qrcode api of google is deprecated and I couldn't t
 4) Run this to run the server
 
    ```
-   python main.py
+   py main.py
    ```
 
 5) Run this if you'd like to add either books or users
    ```
-   python qrCodeGenerate.py
+   py qrCodeGenerate.py
    ```
 
 # Notes
