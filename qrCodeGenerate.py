@@ -13,7 +13,7 @@ def makeQr (url, typeid, filename):
 
 #generates the url for the qrcodes
 def generateurl(typeid, title):
-    HOST = "http://192.168.0.158:5000/" #this is why it can only work if all devices are on the same network
+    HOST = "http://192.168.0.1:5000/" #this is why it can only work if all devices are on the same network
 
     #check if the book exists if it does, use the id of the original book and increment the copy num (the numbers)
     with open('data.json', 'r+') as file:

@@ -1,49 +1,44 @@
 {
     "Books": {
-        "kdGJpb": {
+        "qpkCiD": {
             "Title": "Diary of a Wimpy Kid",
             "copies": {
                 "00": false,
                 "01": false,
-                "02": true
+                "02": false,
+                "03": false
             }
         },
-        "YvFtOm": {
-            "Title": "Fantastic Beasts: And Where to Find Them",
-            "copies": {
-                "00": false,
-                "01": false,
-                "02": false
-            }
-        },
-        "mFQPzt": {
-            "Title": "Sherlock Holmes",
-            "copies": {
-                "00": false,
-                "01": false,
-                "02": false
-            }
-        },
-        "iRZpJG": {
+        "nRoKAD": {
             "Title": "Surviving to Drive",
             "copies": {
                 "00": false,
                 "01": false,
-                "02": true
+                "02": false,
+                "03": false
+            }
+        },
+        "aWRbiK": {
+            "Title": "The Great Gatsby",
+            "copies": {
+                "00": false,
+                "01": false,
+                "02": false,
+                "03": false
             }
         }
     },
     "Borrowers": {
-        "02929255": {
+        "84841128": {
             "borrowerName": "Carlos",
-            "borrowedBook": "kdGJpb02"
-        },
-        "56755099": {
-            "borrowerName": "James",
             "borrowedBook": null
         },
-        "61470151": {
+        "02300126": {
             "borrowerName": "Ricky",
+            "borrowedBook": null
+        },
+        "30203174": {
+            "borrowerName": "Bono",
             "borrowedBook": null
         }
     }
