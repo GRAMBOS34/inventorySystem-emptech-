@@ -27,11 +27,11 @@ def generateurl(typeid, title):
                 #checks if the title exists
                 if title == data['Books'][i]["Title"]:
                     copies = data['Books'][i]['copies']
-                    index = "0" + str(len(copies))
+                    index = len(copies)
                     copies[index] = False
 
                     url = HOST + typeid + f"/{i}{index}"
-                    filename = i + index #filename is the id
+                    filename = f"{i}{index}" #filename is the id
                     makeQr(url=url, typeid="books",filename=filename)
         
                     # Clear the file content
@@ -47,13 +47,13 @@ def generateurl(typeid, title):
             newBook = {
                 "Title": title,
                 "copies": {
-                    "00": False
+                    0: False
                 }
             }
 
             #make the url before saving
-            url = HOST + typeid + f"/{newId}00"
-            filename = newId + "00" #file name is the id
+            url = HOST + typeid + f"/{newId}0"
+            filename = newId + "0" #file name is the id
             makeQr(url=url, typeid='books',filename=filename)
 
             data["Books"][newId] = newBook

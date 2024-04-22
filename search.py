@@ -21,8 +21,8 @@ while True:
             #get the copies that are being borrowed
             copyNums = []
             for k in range(len(data['Books'][i]['copies'])):
-                if data['Books'][i]['copies'][f'0{k}'] == True:
-                    copyNums.append(f'0{k}') 
+                if data['Books'][i]['copies'][k] == True:
+                    copyNums.append(k) 
                 else: continue
 
             #if ever no one has borrowed a copy of the title
