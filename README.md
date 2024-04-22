@@ -21,7 +21,7 @@ Made for EMPTECH because the qrcode api of google is deprecated and I couldn't t
 3) Run this command in the terminal
 
    ```
-   pip install -r requirements.txt
+   py -m pip install -r requirements.txt
    ```
 
 4) Run this for setup
