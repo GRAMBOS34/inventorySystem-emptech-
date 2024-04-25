@@ -11,8 +11,10 @@ def books(id):
     global bookBorrowed
     bookBorrowed = id
 
-    rootid = id[:-2]
-    copyNum = str(id[6:])
+    idlen = len(id) - 6 #this is here to fix the edgecase of the id being above 10
+
+    rootid = bookBorrowed[:-idlen]
+    copyNum = str(bookBorrowed[6:])
 
     #Finds the book and changes its state
     with open('data.json', "r+") as file:
@@ -51,7 +53,9 @@ def user(id):
     global bookBorrowed
 
     #This is so that it'll update the borrowedBook value in the user
-    rootid = bookBorrowed[:-2]
+    idlen = len(bookBorrowed) - 6 #this is here to fix the edgecase of the id being above 10
+
+    rootid = bookBorrowed[:-idlen]
     copyNum = str(bookBorrowed[6:])
 
     with open('data.json', "r+") as file:
