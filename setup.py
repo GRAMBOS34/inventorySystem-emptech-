@@ -6,5 +6,5 @@ generateurl('Surviving to Drive')
 generateurl('The Great Gatsby')
 
 addNewUser('Carlos')
-addNewUser('Ricky')
-addNewUser('Bono')
+addNewUser('Alonso')
+addNewUser('Max')
