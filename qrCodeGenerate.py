@@ -95,7 +95,7 @@ def addNewUser(name):
 if __name__ == "__main__":
     while True:
         try:
-            ans = str(input("Would you like to add a new book or user? (u/b) (q to quit): "))
+            ans = str(input("Would you like to add a new book or user? (u (user) / b (book)) (q to quit): "))
 
             if ans.lower() == 'b':
                 while True:
@@ -107,7 +107,7 @@ if __name__ == "__main__":
                         continue
 
                     for i in range(num_of_copies):
-                        generateurl('b', bookName)
+                        generateurl(bookName)
                         
                     break
 
