@@ -12,6 +12,7 @@ def remove_letters(text):
 while True:
   query = str(input("Search inventory: "))
   with open('data.json', "r+") as file:
+    noBook = False
     data = json.load(file)
 
     #god's worst search algorithm
@@ -42,7 +43,9 @@ while True:
                         copyNum = remove_letters(data['Borrowers'][user]['borrowedBook'])
                         print(f"Student: {data['Borrowers'][user]['borrowerName']} has borrowed {data['Books'][i]['Title']} copy: {copyNum}")
 
-        else: continue #because if i used break here, it would search for a borrower
+        else: 
+            noBook = True
+            continue #because if i used break here, it would search for a borrower
 
 
     #this is just for the borrowers themselves
@@ -57,3 +60,10 @@ while True:
 
             else:
                print("This student hasn't borrowed any books")
+
+    #its like this because if there is no book, there is a guarantee that there is no borrower
+    #after all, how will you borrow something that doesnt exist?
+    if noBook == True:
+        #if it goes here then the search term doesn't exist
+        print("The item you are searching for does not exist.")
+        continue
