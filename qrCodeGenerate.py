@@ -17,77 +17,78 @@ def makeQr (url, typeid, filename):
     img.save(f'qrcodes/{typeid}/{filename}.png')
 
 #generates the url for the qrcodes
-def generateurl(typeid, title):
+def generateurl(title):
+    typeid = 'b'
     #check if the book exists if it does, use the id of the original book and increment the copy num (the numbers)
     with open('data.json', 'r+') as file:
         data = json.load(file)
 
-        if typeid == "b":
-            for i in data['Books']:
-                #checks if the title exists
-                if title == data['Books'][i]["Title"]:
-                    copies = data['Books'][i]['copies']
-                    index = len(copies)
-                    copies[index] = False
+        for i in data['Books']:
+            #checks if the title exists
+            if title == data['Books'][i]["Title"]:
+                copies = data['Books'][i]['copies']
+                index = len(copies)
+                copies[index] = False
 
-                    url = HOST + typeid + f"/{i}{index}"
-                    filename = f"{i}{index}" #filename is the id
-                    makeQr(url=url, typeid="books",filename=filename)
+                url = HOST + typeid + f"/{i}{index}"
+                filename = f"{i}{index}" #filename is the id
+                makeQr(url=url, typeid="books",filename=filename)
+    
+                # Clear the file content
+                file.truncate(0)
+                file.seek(0)
+
+                # Write the updated dictionary back to the file
+                json.dump(data, file, indent=4)
+                return #exits the function after it adds a new copy
         
-                    # Clear the file content
-                    file.truncate(0)
-                    file.seek(0)
-
-                    # Write the updated dictionary back to the file
-                    json.dump(data, file, indent=4)
-                    return #exits the function after it adds a new copy
-            
-            #if it manages to get out here, it means that the title doesn't exist
-            newId = "".join(random.choices(string.ascii_letters, k = 6))
-            newBook = {
-                "Title": title,
-                "copies": {
-                    0: False
-                }
+        #if it manages to get out here, it means that the title doesn't exist
+        newId = "".join(random.choices(string.ascii_letters, k = 6))
+        newBook = {
+            "Title": title,
+            "copies": {
+                0: False
             }
+        }
 
-            #make the url before saving
-            url = HOST + typeid + f"/{newId}0"
-            filename = newId + "0" #file name is the id
-            makeQr(url=url, typeid='books',filename=filename)
+        #make the url before saving
+        url = HOST + typeid + f"/{newId}0"
+        filename = newId + "0" #file name is the id
+        makeQr(url=url, typeid='books',filename=filename)
 
-            data["Books"][newId] = newBook
+        data["Books"][newId] = newBook
 
-            # Clear the file content
-            file.truncate(0)
-            file.seek(0)
+        # Clear the file content
+        file.truncate(0)
+        file.seek(0)
 
-            # Write the updated dictionary back to the file
-            json.dump(data, file, indent=4)
+        # Write the updated dictionary back to the file
+        json.dump(data, file, indent=4)
 
-def addNewUser(typeId, name):
+def addNewUser(name):
+    typeId = 'u'
     with open('data.json', "r+") as file:
         data = json.load(file)
-        if typeId == "u":
-            #no check for if the user already exists because there may be others with the same name
-            #albeit rare, it can happen
-            #full names should be used so it's less likely to happen
-            newId = "".join(random.choices(string.digits, k = 8))
-            data['Borrowers'][newId] = {
-                "borrowerName": name,
-                "borrowedBook": None
-            }
 
-            url = HOST + typeId + '/' + newId
+        #no check for if the user already exists because there may be others with the same name
+        #albeit rare, it can happen
+        #full names should be used so it's less likely to happen
+        newId = "".join(random.choices(string.digits, k = 8))
+        data['Borrowers'][newId] = {
+            "borrowerName": name,
+            "borrowedBook": None
+        }
 
-            makeQr(url=url, typeid='users', filename=newId)
+        url = HOST + typeId + '/' + newId
 
-            # Clear the file content
-            file.truncate(0)
-            file.seek(0)
+        makeQr(url=url, typeid='users', filename=newId)
 
-            # Write the updated dictionary back to the file
-            json.dump(data, file, indent=4)
+        # Clear the file content
+        file.truncate(0)
+        file.seek(0)
+
+        # Write the updated dictionary back to the file
+        json.dump(data, file, indent=4)
             
 
 #main function (for adding books and users)
