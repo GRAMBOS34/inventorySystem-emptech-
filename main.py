@@ -50,6 +50,7 @@ def books(id):
 
 @app.route('/u/<id>')
 def user(id):
+    #id here is for the user id thats why idlen uses bookBorrowed instead of the id variable
     global bookBorrowed
 
     #This is so that it'll update the borrowedBook value in the user
