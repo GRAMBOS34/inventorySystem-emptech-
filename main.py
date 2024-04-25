@@ -7,7 +7,7 @@ bookBorrowed = ''
 
 @app.route('/b/<id>')
 def books(id):
-    #This step is for the user part
+    #This step is for the books part
     global bookBorrowed
     bookBorrowed = id
 
@@ -22,7 +22,6 @@ def books(id):
 
         #This is why it'll assume that you've returned the book
         if data['Books'][rootid]['copies'][copyNum] == True:
-            print('true')
             data['Books'][rootid]['copies'][copyNum] = False
             # Clear the file content
             file.truncate(0)
@@ -35,7 +34,6 @@ def books(id):
         
         #This is why it'll assume that you're borrowing the book
         if data['Books'][rootid]['copies'][copyNum] == False:
-            print('false')
             data['Books'][rootid]['copies'][copyNum] = True
             # Clear the file content
             file.truncate(0)
@@ -45,8 +43,6 @@ def books(id):
             json.dump(data, file, indent=4)
 
             return str(f"Please scan the qr code of the borrower of: {data['Books'][rootid]['Title']}")
-        
-        #I haven't made edge cases yet nor do I know how to do it in this case I don't care enough to try tbh
 
 @app.route('/u/<id>')
 def user(id):
