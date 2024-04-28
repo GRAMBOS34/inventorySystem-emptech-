@@ -8,7 +8,7 @@ hostname = socket.gethostname()
 ipaddress = socket.gethostbyname(hostname)
 HOST = f"http://{ipaddress}:5000/"
 
-#generates the qrcodes and puts them in the folder "qrcodes"
+# generates the qrcodes and puts them in the folder "qrcodes"
 def makeQr (url, typeid, filename):
     img = qrcode.make(url)
 
@@ -16,22 +16,22 @@ def makeQr (url, typeid, filename):
 
     img.save(f'qrcodes/{typeid}/{filename}.png')
 
-#generates the url for the qrcodes
+# generates the url for the qrcodes
 def generateurl(title):
     typeid = 'b'
-    #check if the book exists if it does, use the id of the original book and increment the copy num (the numbers)
+    # check if the book exists if it does, use the id of the original book and increment the copy num (the numbers)
     with open('data.json', 'r+') as file:
         data = json.load(file)
 
         for i in data['Books']:
-            #checks if the title exists
+            # checks if the title exists
             if title == data['Books'][i]["Title"]:
                 copies = data['Books'][i]['copies']
                 index = len(copies)
                 copies[index] = False
 
                 url = HOST + typeid + f"/{i}{index}"
-                filename = f"{i}{index}" #filename is the id
+                filename = f"{i}{index}" # filename is the id
                 makeQr(url=url, typeid="books",filename=filename)
     
                 # Clear the file content
@@ -42,7 +42,7 @@ def generateurl(title):
                 json.dump(data, file, indent=4)
                 return #exits the function after it adds a new copy
         
-        #if it manages to get out here, it means that the title doesn't exist
+        # if it manages to get out here, it means that the title doesn't exist
         newId = "".join(random.choices(string.ascii_letters, k = 6))
         newBook = {
             "Title": title,
@@ -51,7 +51,7 @@ def generateurl(title):
             }
         }
 
-        #make the url before saving
+        # make the url before saving
         url = HOST + typeid + f"/{newId}0"
         filename = newId + "0" #file name is the id
         makeQr(url=url, typeid='books',filename=filename)
@@ -70,9 +70,9 @@ def addNewUser(name):
     with open('data.json', "r+") as file:
         data = json.load(file)
 
-        #no check for if the user already exists because there may be others with the same name
-        #albeit rare, it can happen
-        #full names should be used so it's less likely to happen
+        # no check for if the user already exists because there may be others with the same name
+        # albeit rare, it can happen
+        # full names should be used so it's less likely to happen
         newId = "".join(random.choices(string.digits, k = 8))
         data['Borrowers'][newId] = {
             "borrowerName": name,
@@ -91,7 +91,7 @@ def addNewUser(name):
         json.dump(data, file, indent=4)
             
 
-#main function (for adding books and users)
+# main function (for adding books and users)
 if __name__ == "__main__":
     while True:
         try:
