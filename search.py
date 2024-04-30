@@ -78,12 +78,12 @@ if __name__ == "__main__":
                         copyNum = remove_letters(data['Borrowers'][j]['borrowedBook'])
 
                         print(data['Books'][book]['Title'], f'Copy Number: {copyNum}')
-                        noBook = not noBook # because if it gets out here this value will be true
+                        noBook = not noBook # because if it gets out here this value will be true so this resets it to false
                         break
 
                     else:
                         print("This student hasn't borrowed any books")
-                        noBook = not noBook # because if it gets out here this value will be true
+                        noBook = not noBook # because if it gets out here this value will be true so this resets it to false
                         break
             
             # placed here so that the next loop wont execute without passing through this check first

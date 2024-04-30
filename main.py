@@ -9,7 +9,7 @@ lastBorrowed = ''
 
 # splits the book id 
 def splitId (bookid) -> list:
-    idlen = len(bookid) - 6 # this is here to fix the edgecase of the id being above 10
+    idlen = len(bookid) - 6  # this is here to fix the edgecase of the id being above 10
 
     rootid = bookid[:-idlen]
     copyNum = str(bookid[6:])
@@ -20,12 +20,11 @@ def splitId (bookid) -> list:
 def books(id):
     global returnMode
     global lastBorrowed
-    # This step is for the books part
-    global bookBorrowed
+    global bookBorrowed  # This step is for the books part
     bookBorrowed = id
 
     if returnMode == False:
-        idlen = len(id) - 6 # this is here to fix the edgecase of the id being above 10
+        idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
 
         rootid = bookBorrowed[:-idlen]
         copyNum = str(bookBorrowed[6:])
@@ -45,7 +44,7 @@ def books(id):
             return str(f"Please scan the qr code of the borrower of: {data['Books'][rootid]['Title']}")
             
     if returnMode == True:
-        idlen = len(id) - 6 # this is here to fix the edgecase of the id being above 10
+        idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
 
         rootid = bookBorrowed[:-idlen]
         copyNum = str(bookBorrowed[6:])
@@ -90,7 +89,7 @@ def user(id):
     # this is our so-called "borrowing mode"
     if returnMode == False:
         # This is so that it'll update the borrowedBook value in the user
-        idlen = len(bookBorrowed) - 6 # this is here to fix the edgecase of the id being above 10
+        idlen = len(bookBorrowed) - 6  # this is here to fix the edgecase of the id being above 10
 
         rootid = bookBorrowed[:-idlen]
         copyNum = str(bookBorrowed[6:])
@@ -134,7 +133,7 @@ def user(id):
             if data['Borrowers'][id]['borrowedBook'] == None:
                 return ("No book borrowed, why not try borrowing one?")
             
-            lastBorrowed = data['Borrowers'][id]['borrowedBook'] # updates lastBorrowed variable for the book qr scan 
+            lastBorrowed = data['Borrowers'][id]['borrowedBook']  # updates lastBorrowed variable for the book qr scan 
 
             data['Borrowers'][id]['borrowedBook'] = None
             # Clear the file content
