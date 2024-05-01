@@ -2,6 +2,8 @@
 
 Made for EMPTECH because the qrcode api of google is deprecated and I couldn't think of a better solution
 
+> _Maybe it's more accurate to say that i just didn't want to deal with google forms and sheets_
+
 # Installation
 
 1. Make sure you have Python and pip installed
