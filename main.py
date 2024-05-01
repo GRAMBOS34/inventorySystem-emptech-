@@ -1,7 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="template")
 
 bookBorrowed = ''
 returnMode = False
@@ -41,7 +41,8 @@ def books(id):
             # Write the updated dictionary back to the file
             json.dump(data, file, indent=4)
 
-            return str(f"Please scan the qr code of the borrower of: {data['Books'][rootid]['Title']}")
+            msg = str(f"Please scan the qr code of the borrower of: {data['Books'][rootid]['Title']}")
+            return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
     if returnMode == True:
         idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
@@ -54,9 +55,11 @@ def books(id):
 
             # just in case that the user scanned the wrong book
             if id != lastBorrowed:
-                return (f"This book isn't the one you borrowed. The book you borrowed was" \
+                msg =  (f"This book isn't the one you borrowed. The book you borrowed was" \
                         f"{data['Books'][splitId(lastBorrowed)[0]]['Title']} " \
                         f"Copy no. {splitId(lastBorrowed)[1]}")
+                
+                return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
             if id == lastBorrowed:
                 data['Books'][rootid]['copies'][copyNum] = False
@@ -67,8 +70,10 @@ def books(id):
                 # Write the updated dictionary back to the file
                 json.dump(data, file, indent=4)
 
-                return str(f"Thank you for returning {data['Books'][splitId(lastBorrowed)[0]]['Title']} " \
+                msg =  str(f"Thank you for returning {data['Books'][splitId(lastBorrowed)[0]]['Title']} " \
                            f"Copy no. {splitId(lastBorrowed)[1]}")
+                
+                return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
 
 @app.route('/u/<id>')
@@ -108,7 +113,8 @@ def user(id):
                 # Write the updated dictionary back to the file
                 json.dump(data, file, indent=4)
                 bookBorrowed = '' # clears this variable
-                return (f'State updated! (You can close this now)')
+                msg =  str(f'State updated! (You can close this now)')
+                return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
 
             # If the borrowed book returns false, it'll assume that you've returned it
             # This just updates that state
@@ -122,7 +128,8 @@ def user(id):
                 json.dump(data, file, indent=4)
                 bookBorrowed = '' # clears this variable
 
-                return (f'State updated! (You can close this now)')
+                msg =  str(f'State updated! (You can close this now)')
+                return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
     # this is our so-called "return mode"
     if returnMode == True:
@@ -146,9 +153,10 @@ def user(id):
             returnMode = True
 
             # lord have mercy on this return statement
-            return (f"Please scan the QR code for the book " \
+            msg =  str(f"Please scan the QR code for the book " \
                     f"{data['Books'][splitId(lastBorrowed)[0]]['Title']} Copy no. " \
                     f"{splitId(lastBorrowed)[1]}")
+            return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
 
 #runs the server
 if __name__ == "__main__":
