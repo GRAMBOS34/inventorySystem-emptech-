@@ -6,6 +6,7 @@ app = Flask(__name__, template_folder="template")
 bookBorrowed = ''
 returnMode = False
 lastBorrowed = ''
+lastMsg = ''
 
 # splits the book id 
 def splitId (bookid) -> list:
@@ -26,8 +27,8 @@ def books(id):
     if returnMode == False:
         idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
 
-        rootid = bookBorrowed[:-idlen]
-        copyNum = str(bookBorrowed[6:])
+        rootid = id[:-idlen]
+        copyNum = str(id[6:])
 
         # Finds the book and changes its state
         with open('data.json', "r+") as file:
@@ -82,6 +83,7 @@ def user(id):
     global bookBorrowed
     global returnMode  # this is for when the user will return the book
     global lastBorrowed
+    global lastMsg  # for the last message
 
     with open('data.json', 'r+') as file:
         data = json.load(file)
@@ -90,6 +92,12 @@ def user(id):
             returnMode = False
 
         else: returnMode = True
+
+    # if nothing has changed just do nothing
+    if lastBorrowed == bookBorrowed:
+        returnMode = False
+        msg = str("Nothing has changed (You can close this now)")
+        return render_template('index.html', outmsg=msg)
 
     # this is our so-called "borrowing mode"
     if returnMode == False:
@@ -129,6 +137,7 @@ def user(id):
                 bookBorrowed = '' # clears this variable
 
                 msg =  str(f'State updated! (You can close this now)')
+                lastMsg = msg
                 return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
     # this is our so-called "return mode"
@@ -156,6 +165,7 @@ def user(id):
             msg =  str(f"Please scan the QR code for the book " \
                     f"{data['Books'][splitId(lastBorrowed)[0]]['Title']} Copy no. " \
                     f"{splitId(lastBorrowed)[1]}")
+            lastMsg = msg
             return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
 
 #runs the server
