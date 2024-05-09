@@ -76,7 +76,8 @@ def addNewUser(name):
         newId = "".join(random.choices(string.digits, k = 8))
         data['Borrowers'][newId] = {
             "borrowerName": name,
-            "borrowedBook": None
+            "borrowedBook": None,
+            "borrowedBookTitle": None  # this value is strictly only for the fucking html shit
         }
 
         url = HOST + typeId + '/' + newId

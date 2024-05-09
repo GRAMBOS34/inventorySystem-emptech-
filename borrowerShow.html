@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowers and Borrowed Books</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Borrowers and Borrowed Books</h1>
+        <div v-if="loaded">
+            <ul>
+                <li v-for="(borrower, id) in borrowers" :key="id">
+                    <strong>Borrower Name:</strong> {{ borrower.borrowerName }}<br>
+                    <!-- The way I made the data file is stupid and I am ashamed -->
+                    <strong>Borrowed Book:</strong> {{ borrower.borrowedBookTitle }}
+                    <hr>
+                </li>
+            </ul>
+        </div>
+        <div v-else>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Include Vue.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- Include your JavaScript file -->
+    <script src="script.js"></script>
+</body>
+
+</html>

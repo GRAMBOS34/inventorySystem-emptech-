@@ -24,12 +24,16 @@ def books(id):
     global bookBorrowed  # This step is for the books part
     bookBorrowed = id
 
+    idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
+    rootid = id[:-idlen]
+    copyNum = str(id[6:])
+
+    # if nothing has changed just do nothing this is if we scan the same user qrcode twice or more in a row
+    if len(bookBorrowed) == 0 and returnMode == True:
+        msg = str("Nothing has changed (You can close this now)")
+        return render_template('index.html', outmsg=msg)
+
     if returnMode == False:
-        idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
-
-        rootid = id[:-idlen]
-        copyNum = str(id[6:])
-
         # Finds the book and changes its state
         with open('data.json', "r+") as file:
             data = json.load(file)
@@ -43,18 +47,18 @@ def books(id):
             json.dump(data, file, indent=4)
 
             msg = str(f"Please scan the qr code of the borrower of: {data['Books'][rootid]['Title']}")
+            lastBorrowed = id
             return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
     if returnMode == True:
-        idlen = len(id) - 6  # this is here to fix the edgecase of the id being above 10
-
-        rootid = bookBorrowed[:-idlen]
-        copyNum = str(bookBorrowed[6:])
-
         with open('data.json', 'r+') as file:
             data = json.load(file)
 
             # just in case that the user scanned the wrong book
+            if len(bookBorrowed) == 0:
+                msg = str(f"Nothing has changed ({lastMsg})")
+                return render_template('index.html', outmsg=msg)
+
             if id != lastBorrowed:
                 msg =  (f"This book isn't the one you borrowed. The book you borrowed was" \
                         f"{data['Books'][splitId(lastBorrowed)[0]]['Title']} " \
@@ -73,6 +77,7 @@ def books(id):
 
                 msg =  str(f"Thank you for returning {data['Books'][splitId(lastBorrowed)[0]]['Title']} " \
                            f"Copy no. {splitId(lastBorrowed)[1]}")
+                returnMode = False
                 
                 return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
             
@@ -85,6 +90,13 @@ def user(id):
     global lastBorrowed
     global lastMsg  # for the last message
 
+    # This is so that it'll update the borrowedBook value in the user
+    idlen = len(bookBorrowed) - 6  # this is here to fix the edgecase of the id being above 10
+
+    rootid = bookBorrowed[:-idlen]
+    copyNum = str(bookBorrowed[6:])
+
+    # this is how we check if it's someone trying to return a book or not
     with open('data.json', 'r+') as file:
         data = json.load(file)
 
@@ -93,27 +105,22 @@ def user(id):
 
         else: returnMode = True
 
-    # if nothing has changed just do nothing
-    if lastBorrowed == bookBorrowed:
-        returnMode = False
-        msg = str("Nothing has changed (You can close this now)")
-        return render_template('index.html', outmsg=msg)
-
     # this is our so-called "borrowing mode"
     if returnMode == False:
-        # This is so that it'll update the borrowedBook value in the user
-        idlen = len(bookBorrowed) - 6  # this is here to fix the edgecase of the id being above 10
-
-        rootid = bookBorrowed[:-idlen]
-        copyNum = str(bookBorrowed[6:])
-
         with open('data.json', "r+") as file:
             data = json.load(file)
+
+            # just in case that the user scanned the wrong book
+            if len(bookBorrowed) == 0:
+                msg = str(f"Nothing has changed ({lastMsg})")
+                returnMode = True
+                return render_template('index.html', outmsg=msg)
 
             # If the borrowed book returns true, it'll assume that you've borrowed it
             # This just updates that state
             if data['Books'][rootid]['copies'][copyNum] == True:
                 data['Borrowers'][id]['borrowedBook'] = bookBorrowed
+                data['Borrowers'][id]['borrowedBookTitle'] = f"{data['Books'][rootid]['Title']} Copy No. {copyNum}"  # for the html file fml
                 # Clear the file content
                 file.truncate(0)
                 file.seek(0)
@@ -122,6 +129,7 @@ def user(id):
                 json.dump(data, file, indent=4)
                 bookBorrowed = '' # clears this variable
                 msg =  str(f'State updated! (You can close this now)')
+                lastMsg = msg
                 return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
 
             # If the borrowed book returns false, it'll assume that you've returned it
@@ -152,6 +160,8 @@ def user(id):
             lastBorrowed = data['Borrowers'][id]['borrowedBook']  # updates lastBorrowed variable for the book qr scan 
 
             data['Borrowers'][id]['borrowedBook'] = None
+            data['Borrowers'][id]['borrowedBookTitle'] = None  # for the html file fml
+
             # Clear the file content
             file.truncate(0)
             file.seek(0)
@@ -166,6 +176,7 @@ def user(id):
                     f"{data['Books'][splitId(lastBorrowed)[0]]['Title']} Copy no. " \
                     f"{splitId(lastBorrowed)[1]}")
             lastMsg = msg
+            bookBorrowed = ''
             return render_template('index.html', outmsg=msg)  # renders a webpage to show the message
 
 #runs the server
